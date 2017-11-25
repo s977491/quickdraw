@@ -1,0 +1,58 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+    <!-- <id>runtime</id> -->
+    <id>r${git.shortRevision}</id>
+    <formats>
+        <!--<format>tar.gz</format>-->
+        <!--<format>tar.bz2</format>-->
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <!-- <baseDirectory>data-purge</baseDirectory> -->
+    <baseDirectory>${project.artifactId}${project.version}-r${git.shortRevision}</baseDirectory>
+
+    <fileSets>
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>/</outputDirectory>
+            <fileMode>0644</fileMode>
+            <includes>
+                <include>application.override.properties</include>
+                <include>readme.txt</include>
+                <include>run.bat</include>
+                <include>run.sh</include>
+            </includes>
+            <filtered>false</filtered>
+        </fileSet>
+
+        <!--
+                <fileSet>
+                    <directory>${project.basedir}/zmq_${build.type}</directory>
+                    <outputDirectory>/</outputDirectory>
+                    <includes>
+                        <include>*.dll</include>
+                    </includes>
+                    <fileMode>0644</fileMode>
+                    <filtered>false</filtered>
+                </fileSet>
+                <fileSet>
+                    <directory>extlib</directory>
+                    <outputDirectory>/</outputDirectory>
+                    <includes>
+                        <include>*.dll</include>
+                    </includes>
+                    <fileMode>0644</fileMode>
+                    <filtered>false</filtered>
+                </fileSet>
+         -->
+    </fileSets>
+
+    <dependencySets>
+        <dependencySet>
+            <useTransitiveFiltering>true</useTransitiveFiltering>
+            <outputDirectory>/lib</outputDirectory>
+            <scope>runtime</scope>
+        </dependencySet>
+    </dependencySets>
+</assembly>
