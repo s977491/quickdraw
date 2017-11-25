@@ -24,21 +24,22 @@
       <artifactId>guice</artifactId>
       <version>4.0</version>
     </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>1.2.3</version>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-access</artifactId>
-      <version>1.2.3</version>
-    </dependency>
-<!--    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.7.25</version>
-    </dependency>-->
+      <!--
+          <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+          </dependency>
+          <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-access</artifactId>
+            <version>1.2.3</version>
+          </dependency>
+          <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+          </dependency>-->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -46,6 +47,8 @@
     </dependency>
   </dependencies>
   <build>
+	<finalName>${project.artifactId}${project.version}</finalName>
+
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -56,19 +59,25 @@
           </descriptors>
         </configuration>
       </plugin>
-      <!--<plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>com.arthur.drawapp.App</mainClass>
-            </manifest>
-          </archive>
-          <descriptorRefs>
-            <descriptorRef>bin</descriptorRef>
-          </descriptorRefs>
-        </configuration>
-      </plugin>-->
+      <plugin>
+		<groupId>ru.concerteza.buildnumber</groupId>
+		<artifactId>maven-jgit-buildnumber-plugin</artifactId>
+		<version>1.2.10</version>
+		<executions>
+			<execution>
+				<id>git-buildnumber</id>
+				<goals>
+					<goal>extract-buildnumber</goal>
+				</goals>
+				<phase>prepare-package</phase>
+				<configuration>
+					<javaScriptBuildnumberCallback>
+						branch + "_" + commitDate  + "_" + commitsCount  
+					</javaScriptBuildnumberCallback>
+				</configuration>
+			</execution>
+		</executions>
+	</plugin>
     </plugins>
   </build>
 </project>
